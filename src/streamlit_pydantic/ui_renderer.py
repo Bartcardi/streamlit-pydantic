@@ -607,7 +607,12 @@ class InputUI:
         if property.get("default") is not None:
             streamlit_kwargs["value"] = number_transform(property.get("default"))  # type: ignore
         else:
-            if "min_value" in streamlit_kwargs:
+            if "min_value" in streamlit_kwargs and "max_value" in streamlit_kwargs:
+                streamlit_kwargs["value"] = [
+                    streamlit_kwargs["min_value"],
+                    streamlit_kwargs["max_value"],
+                ]
+            elif "min_value" in streamlit_kwargs:
                 streamlit_kwargs["value"] = streamlit_kwargs["min_value"]
             elif number_transform == int:
                 streamlit_kwargs["value"] = 0
